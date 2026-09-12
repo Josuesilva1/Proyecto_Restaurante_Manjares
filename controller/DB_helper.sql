@@ -203,3 +203,5 @@ INSERT INTO Menu_Plato (cantidad_producir, existencia_actual, Plato_codigo_plato
 (30, 28, 3, 2), -- 30 Platos Típicos en Menú 2
 (60, 55, 4, 3), -- 60 Tacos al Pastor en Menú 3
 (40, 35, 5, 4); -- 40 Sopas de Caracol en Menú 4
+
+ALTER TABLE proveedor MODIFY COLUMN 
