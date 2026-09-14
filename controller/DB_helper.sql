@@ -1,6 +1,6 @@
 -- Active: 1739597103554@@127.0.0.1@3306@restaurante_manjares
 
-DROP DATABASE restaurante_manjares;
+-- DROP DATABASE restaurante_manjares;
 CREATE DATABASE restaurante_manjares;
 USE restaurante_manjares;
 -- Tabla Proveedor
