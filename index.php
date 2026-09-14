@@ -17,9 +17,20 @@
 </head>
 <body>
 
-    <div>
-        <?php include 'views/forms.php' ?>
+<div class="d-flex flex-column flex-lg-row vh-100" style="background-color:#F7F5F2;">
+
+    <?php include "views/form_products.php" ?>
+
+    <div class="d-lg-none px-4">
+        <hr style="border-color:#D9A404; opacity:0.4;">
     </div>
+    <div class="d-none d-lg-flex align-items-center">
+        <div style="width:1px; height:70%; background-color:#D9A404; opacity:0.4;"></div>
+    </div>
+    
+    <?php include "views/form_supplier.php" ?>
+
+</div>
 
     <!-- BOOTSTRAP -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
