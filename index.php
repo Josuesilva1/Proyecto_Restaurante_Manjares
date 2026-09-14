@@ -18,7 +18,7 @@
 <body>
 
     <div>
-        <?php include 'controller/DB_conection.php' ?>
+        <?php include 'views/forms.php' ?>
     </div>
 
     <!-- BOOTSTRAP -->

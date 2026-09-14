@@ -14,19 +14,28 @@
         }, false)
     })
 
-    // Mostrar/ocultar contraseña
-    const togglePassword = document.getElementById('toggle-password')
+    'use strict'
 
-    if (togglePassword) {
-        togglePassword.addEventListener('click', function () {
-            const input = document.getElementById('password')
-            const icon = this.querySelector('i')
-            if (input.type === 'password') {
-                input.type = 'text'
-                icon.classList.replace('bi-eye', 'bi-eye-slash')
-            } else {
-                input.type = 'password'
-                icon.classList.replace('bi-eye-slash', 'bi-eye')
+    const container = document.getElementById('telefonos-container')
+    const addBtn = document.getElementById('add-telefono')
+
+    if (addBtn && container) {
+        addBtn.addEventListener('click', () => {
+            const row = document.createElement('div')
+            row.className = 'input-group mb-2 telefono-row'
+            row.innerHTML = `
+                <span class="input-group-text bg-white"><i class="bi bi-telephone"></i></span>
+                <input type="tel" name="telefonos[]" class="form-control" placeholder="9999-9999">
+                <button type="button" class="btn btn-outline-danger remove-telefono">
+                    <i class="bi bi-trash"></i>
+                </button>
+            `
+            container.appendChild(row)
+        })
+
+        container.addEventListener('click', (event) => {
+            if (event.target.closest('.remove-telefono')) {
+                event.target.closest('.telefono-row').remove()
             }
         })
     }
