@@ -1,3 +1,7 @@
+<?php 
+include '../includes.php'
+?>
+
 <div class="flex-fill d-flex flex-column justify-content-center px-4 px-md-5 py-4 position-relative">
 
     <div class="mx-auto" style="width:100%; max-width:420px;">
@@ -8,8 +12,7 @@
             </h1>
         </div>
 
-        <form action="" class="row needs-validation" novalidate>
-
+        <form action="" method="POST" class="row needs-validation" novalidate> // se uso el metodo POST 
             <div class="col-4">
                 <label for="codigo-proveedor" class="form-label">Código</label>
                 <div class="input-group">
