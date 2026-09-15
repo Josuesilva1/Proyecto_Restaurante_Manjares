@@ -1,5 +1,5 @@
 <?php 
-include '../includes.php'
+include '../includes.php';
 ?>
 
 <div class="flex-fill d-flex flex-column justify-content-center px-4 px-md-5 py-4 position-relative">
@@ -12,12 +12,12 @@ include '../includes.php'
             </h1>
         </div>
 
-        <form action="" method="POST" class="row needs-validation" novalidate> // se uso el metodo POST 
+        <form action="../controller/suppliers_pdo.php" method="POST" class="row needs-validation" novalidate>
             <div class="col-4">
                 <label for="codigo-proveedor" class="form-label">Código</label>
                 <div class="input-group">
                     <span class="input-group-text bg-white"><i class="bi bi-upc"></i></span>
-                    <input type="number" id="codigo-proveedor" name="codigo" class="form-control" required>
+                    <input type="text" id="codigo-proveedor" name="codigo" class="form-control" required>
                     <div class="invalid-feedback">
                         Por favor ingrese un código
                     </div>

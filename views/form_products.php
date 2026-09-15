@@ -14,7 +14,7 @@
                 <label for="codigo-producto" class="form-label">Código</label>
                 <div class="input-group">
                     <span class="input-group-text bg-white"><i class="bi bi-upc"></i></span>
-                    <input type="number" id="codigo-producto" name="codigo" class="form-control" required>
+                    <input type="text" id="codigo-producto" name="codigo" class="form-control" required>
                     <div class="invalid-feedback">
                         Por favor ingrese un código
                     </div>
@@ -45,7 +45,7 @@
                         <label for="existencia" class="form-label">Existencia</label>
                         <div class="input-group">
                             <span class="input-group-text bg-white"><i class="bi bi-boxes"></i></span>
-                            <input type="number" id="existencia" name="existencia" class="form-control">
+                            <input type="text" id="existencia" name="existencia" class="form-control">
                         </div>
                     </div>
                 </div>

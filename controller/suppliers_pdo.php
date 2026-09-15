@@ -1,38 +1,57 @@
 <?php
-// Incluimos la conexión centralizada
 include 'DB_conection.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
-        // Recibir los datos del formulario de proveedores
-        $codigo = $_POST['codigo'];
-        $nombre = $_POST['nombre'];
-        $direccion = $_POST['direccion'];
-        $rtn = $_POST['rtn'];
-        $ciudad = $_POST['ciudad'];
         
-        // Manejar el array de teléfonos
-        $telefonos = isset($_POST['telefonos']) ? implode(", ", $_POST['telefonos']) : '';
+        $conn->beginTransaction();
 
-        // OJO AQUÍ: Usamos la tabla 'proveedor' y la columna 'codigo_proveedor'
-        $sql = "INSERT INTO proveedor (codigo_proveedor, nombre, direccion, rtn, ciudad, telefono) 
-                VALUES (:codigo, :nombre, :direccion, :rtn, :ciudad, :telefono)";
+        $codigo = $_POST['codigo'] ?? '';
+        $nombre = $_POST['nombre'] ?? '';
+        $direccion = $_POST['direccion'] ?? '';
+        $rtn = $_POST['rtn'] ?? '';
+        $ciudad = $_POST['ciudad'] ?? '';
+        $telefonos = $_POST['telefonos'] ?? []; 
+
+        // insertar
+        $sqlProveedor = "INSERT INTO Proveedor (codigo_proveedor, nombre, direccion, rtn, ciudad) 
+                         VALUES (:codigo, :nombre, :direccion, :rtn, :ciudad)";
         
-        $stmt = $conn->prepare($sql);
-        
-        // Ejecutamos pasando los valores
-        $stmt->execute([
+        $stmtProveedor = $conn->prepare($sqlProveedor);
+        $stmtProveedor->execute([
             ':codigo' => $codigo,
             ':nombre' => $nombre,
             ':direccion' => $direccion,
             ':rtn' => $rtn,
-            ':ciudad' => $ciudad,
-            ':telefono' => $telefonos
+            ':ciudad' => $ciudad
         ]);
 
-        echo "<div class='alert alert-success mt-3'>¡Proveedor agregado exitosamente!</div>";
+        // Verificacion de los telefonps
+        if (!empty($telefonos) && is_array($telefonos)) {
+            $sqlTelefono = "INSERT INTO Telefono (id_telefono, numero, Proveedor_codigo_proveedor) 
+                            VALUES (:id_telefono, :numero, :proveedor_codigo)";
+            $stmtTelefono = $conn->prepare($sqlTelefono);
+
+            foreach ($telefonos as $index => $num) {
+                if (!empty(trim($num))) {
+                    
+                    $idTelefono = $codigo . '-' . ($index + 1);
+                    
+                    $stmtTelefono->execute([
+                        ':id_telefono' => $idTelefono,
+                        ':numero' => $num,
+                        ':proveedor_codigo' => $codigo
+                    ]);
+                }
+            }
+        }
+
+        $conn->commit();
+        echo "<div class='alert alert-success mt-3'>¡Proveedor y teléfonos agregados exitosamente!</div>";
 
     } catch (PDOException $e) {
+        // Revertir cambios si ocurre un error
+        $conn->rollBack();
         echo "<div class='alert alert-danger mt-3'>Error de inserción: " . $e->getMessage() . "</div>";
     }
 }
