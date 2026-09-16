@@ -3,7 +3,6 @@ include 'DB_conection.php';
 
 if (isset($_POST['form_proveedor'])) {
     try {
-        
         $conn->beginTransaction();
 
         $codigo = $_POST['codigo'] ?? '';
@@ -13,7 +12,7 @@ if (isset($_POST['form_proveedor'])) {
         $ciudad = $_POST['ciudad'] ?? '';
         $telefonos = $_POST['telefonos'] ?? []; 
 
-        // insertar
+        // 1. Inserción del proveedor (MySQL se encarga de validar duplicados por la llave primaria)
         $sqlProveedor = "INSERT INTO Proveedor (codigo_proveedor, nombre, direccion, rtn, ciudad) 
                          VALUES (:codigo, :nombre, :direccion, :rtn, :ciudad)";
         
@@ -26,20 +25,35 @@ if (isset($_POST['form_proveedor'])) {
             ':ciudad' => $ciudad
         ]);
 
-        // Verificacion de los telefonos
+        // 2. Verificación e inserción de teléfonos con formato 'telXX' y prefijo '+504'
         if (!empty($telefonos) && is_array($telefonos)) {
             $sqlTelefono = "INSERT INTO Telefono (id_telefono, numero, Proveedor_codigo_proveedor) 
                             VALUES (:id_telefono, :numero, :proveedor_codigo)";
             $stmtTelefono = $conn->prepare($sqlTelefono);
 
-            foreach ($telefonos as $index => $num) {
-                if (!empty(trim($num))) {
+            // Consultar cuántos teléfonos existen en total para continuar la secuencia
+            $stmtCount = $conn->query("SELECT COUNT(*) AS total FROM Telefono");
+            $row = $stmtCount->fetch(PDO::FETCH_ASSOC);
+            $siguienteNumero = (int)$row['total'];
+
+            foreach ($telefonos as $num) {
+                $numLimpio = trim($num);
+                if (!empty($numLimpio)) {
+                    $siguienteNumero++;
                     
-                    $idTelefono = $codigo . '-' . ($index + 1);
+                    // Generar ID secuencial ej: tel11, tel12...
+                    $idTelefono = "tel" . str_pad($siguienteNumero, 2, "0", STR_PAD_LEFT);
+                    
+                    // Anteponer '+504 ' automáticamente si el usuario no lo escribió
+                    if (strpos($numLimpio, '+504') !== 0) {
+                        $numeroFinal = '+504 ' . $numLimpio;
+                    } else {
+                        $numeroFinal = $numLimpio;
+                    }
                     
                     $stmtTelefono->execute([
                         ':id_telefono' => $idTelefono,
-                        ':numero' => $num,
+                        ':numero' => $numeroFinal,
                         ':proveedor_codigo' => $codigo
                     ]);
                 }
