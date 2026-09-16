@@ -1,7 +1,7 @@
 <?php
 include 'DB_conection.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (isset($_POST['form_proveedor'])) {
     try {
         
         $conn->beginTransaction();
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ':ciudad' => $ciudad
         ]);
 
-        // Verificacion de los telefonps
+        // Verificacion de los telefonos
         if (!empty($telefonos) && is_array($telefonos)) {
             $sqlTelefono = "INSERT INTO Telefono (id_telefono, numero, Proveedor_codigo_proveedor) 
                             VALUES (:id_telefono, :numero, :proveedor_codigo)";
@@ -47,12 +47,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         $conn->commit();
-        echo "<div class='alert alert-success mt-3'>¡Proveedor y teléfonos agregados exitosamente!</div>";
+        echo "
+        <div class='toast-container position-fixed top-0 end-0 p-3' style='z-index: 1055;'>
+            <div class='toast align-items-center text-bg-success border-0 show' role='alert' aria-live='assertive' aria-atomic='true'>
+                <div class='d-flex'>
+                    <div class='toast-body d-flex align-items-center gap-2'>
+                        <i class='bi bi-check-circle-fill fs-5'></i>
+                        <span>¡Proveedor agregado exitosamente!</span>
+                    </div>
+                    <button type='button' class='btn-close btn-close-white me-2 m-auto' data-bs-dismiss='toast' aria-label='Close'></button>
+                </div>
+            </div>
+        </div>
+        ";
 
     } catch (PDOException $e) {
-        // Revertir cambios si ocurre un error
         $conn->rollBack();
-        echo "<div class='alert alert-danger mt-3'>Error de inserción: " . $e->getMessage() . "</div>";
+        echo "
+        <div class='toast-container position-fixed top-0 end-0 p-3' style='z-index: 1055;'>
+            <div class='toast align-items-center text-bg-danger border-0 show' role='alert' aria-live='assertive' aria-atomic='true'>
+                <div class='d-flex'>
+                    <div class='toast-body d-flex align-items-center gap-2'>
+                        <i class='bi bi-exclamation-triangle-fill fs-5'></i>
+                        <span>Error de inserción: " . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8') . "</span>
+                    </div>
+                    <button type='button' class='btn-close btn-close-white me-2 m-auto' data-bs-dismiss='toast' aria-label='Close'></button>
+                </div>
+            </div>
+        </div>
+        ";
     }
 }
 ?>

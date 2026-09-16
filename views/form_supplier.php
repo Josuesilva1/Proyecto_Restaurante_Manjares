@@ -1,5 +1,4 @@
 <?php 
-include './controller/DB_conection.php';
 include './controller/suppliers_pdo.php'
 ?>
 
@@ -13,7 +12,8 @@ include './controller/suppliers_pdo.php'
             </h1>
         </div>
 
-        <form action="../controller/suppliers_pdo.php" method="POST" class="row needs-validation" novalidate>
+        <form action="" method="POST" class="row needs-validation" novalidate>
+            <input type="hidden" name="form_proveedor" value="1">
             <div class="col-4">
                 <label for="codigo-proveedor" class="form-label">Código</label>
                 <div class="input-group">
