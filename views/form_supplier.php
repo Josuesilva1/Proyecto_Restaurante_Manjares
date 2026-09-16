@@ -11,7 +11,7 @@ include '../includes.php';
                 Agregar nuevo proveedor
             </h1>
         </div>
-
+         #uso de metodo post
         <form action="../controller/suppliers_pdo.php" method="POST" class="row needs-validation" novalidate>
             <div class="col-4">
                 <label for="codigo-proveedor" class="form-label">Código</label>
