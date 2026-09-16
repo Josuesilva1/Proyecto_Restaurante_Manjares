@@ -1,5 +1,6 @@
 <?php 
-include '../includes.php';
+include './controller/DB_conection.php';
+include './controller/suppliers_pdo.php'
 ?>
 
 <div class="flex-fill d-flex flex-column justify-content-center px-4 px-md-5 py-4 position-relative">
