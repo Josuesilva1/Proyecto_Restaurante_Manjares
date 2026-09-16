@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "12345678";
+$password = "Pokemongo2016";
 $dbname = "restaurante_manjares";
 
 try {

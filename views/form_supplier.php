@@ -11,14 +11,9 @@ include './controller/suppliers_pdo.php'
                 Agregar nuevo proveedor
             </h1>
         </div>
-<<<<<<< HEAD
-         #uso de metodo post
-        <form action="../controller/suppliers_pdo.php" method="POST" class="row needs-validation" novalidate>
-=======
 
         <form action="" method="POST" class="row needs-validation" novalidate>
             <input type="hidden" name="form_proveedor" value="1">
->>>>>>> 70c20a61e8c5149d4483da21520521f180893eef
             <div class="col-4">
                 <label for="codigo-proveedor" class="form-label">Código</label>
                 <div class="input-group">
